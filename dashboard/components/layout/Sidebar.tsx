@@ -20,13 +20,13 @@ import { useDebounce } from '../hooks/useDebunce';
 const Sidebar: React.FC = () => {
   const [results, setResults] = useState<TreeResultType[]>([]);
   const [search, setSearch] = useState('');
-  const [prevPage, setPrevPage] = useState(false);
-  const [nextPage, setNextPage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
     if (debouncedSearch) {
+      setLoading(true);
       fetch('http://localhost:3000/api/search', {
         body: JSON.stringify({
           query: debouncedSearch,
@@ -40,7 +40,7 @@ const Sidebar: React.FC = () => {
         .then((e) => {
           // TODO: Add setResults here
           console.log(e.data);
-
+          setLoading(false);
           pipe(
             SearchResult.decode(e),
             E.fold(
@@ -58,8 +58,8 @@ const Sidebar: React.FC = () => {
   }, [debouncedSearch]);
 
   return (
-    <div style={{ flex: 2, backgroundColor: 'salmon' }}>
-      <Card>
+    <div style={{ flex: 2 }}>
+      <Card elevation={8}>
         <CardContent>
           <Typography>Search</Typography>
           <OutlinedInput
@@ -69,9 +69,19 @@ const Sidebar: React.FC = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
           <Container style={{ minHeight: '70vh' }}>
-            {results.length == 0
-              ? null
-              : results.map((r) => <ResultCard key={r.id} data={r} />)}
+            {loading ? (
+              <Container style={{ padding: '1rem' }}>
+                <Typography align="center">loading...</Typography>
+              </Container>
+            ) : results.length == 0 ? (
+              <Container style={{ padding: '1rem' }}>
+                <Typography align="center">
+                  🕵️ We can't seem to find anything...
+                </Typography>
+              </Container>
+            ) : (
+              results.map((r) => <ResultCard key={r.id} data={r} />)
+            )}
           </Container>
           <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button>Previous Page</Button>

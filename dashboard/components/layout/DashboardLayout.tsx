@@ -1,3 +1,4 @@
+import { Card, Grid, Paper } from '@mui/material';
 import React from 'react';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
@@ -10,38 +11,39 @@ export interface ILayout extends React.ComponentPropsWithoutRef<'div'> {
 const DashboardLayout: React.FC<ILayout> = ({ children }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {/* BUG: This is causing an error about spreading the styles? */}
-      {/* <Head>
-        <title>Lloyd's Baumkataster Explorer</title>
-        <meta
-          name="description"
-          content="A Database Explorer for the Zurich Baumkataster"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
-
       <TopNav />
-      <div
+      <Paper
+        square
+        elevation={0}
         style={{
           display: 'flex',
           flexDirection: 'row',
           gap: '1rem',
-          backgroundColor: 'red',
           minHeight: '85vh',
           padding: '1rem',
         }}
       >
         <Sidebar />
-        <div
+        <Card
+          elevation={8}
           style={{
             flex: 3,
-            backgroundColor: 'teal',
-            justifyContent: 'center',
           }}
         >
-          {children}
-        </div>
-      </div>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            style={{ minHeight: '79vh' }}
+          >
+            <Grid item xs={3}>
+              {children}
+            </Grid>
+          </Grid>
+        </Card>
+      </Paper>
       <Footer />
     </div>
   );

@@ -1,22 +1,24 @@
+import { Paper, Typography } from '@mui/material';
 import Link from 'next/link';
 
 const TopNav = () => {
   return (
-    <div
+    <Paper
+      elevation={4}
+      square
       style={{
         display: 'flex',
         justifyContent: 'space-between',
         flexGrow: 1,
         flexDirection: 'row',
-        backgroundColor: 'blue',
         padding: '1.5rem',
       }}
     >
       <Link href="/">
-        <h2>Baumkataster Explorer</h2>
+        <Typography variant="h4">Baumkataster Explorer</Typography>
       </Link>
-      <h3>by Lloyd Richards</h3>
-    </div>
+      <Typography variant="subtitle1">Lloyd Richards</Typography>
+    </Paper>
   );
 };
 

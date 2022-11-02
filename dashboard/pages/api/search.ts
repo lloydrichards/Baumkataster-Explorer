@@ -40,9 +40,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
         throw Error();
       },
       async (r) => {
-        console.log(r);
-        const test = await prisma.tree.findMany({ where: { quarter: 'City' } });
-        console.log(test.length);
         const data = await prisma.tree.findMany({
           select: {
             id: true,

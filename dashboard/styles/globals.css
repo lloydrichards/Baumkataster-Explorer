@@ -20,13 +20,3 @@ a {
   width: 50%;
   padding: 1.4rem;
 }
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}

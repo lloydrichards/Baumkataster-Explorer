@@ -1,17 +1,20 @@
+import { Container, Paper, Typography } from '@mui/material';
+
 const Footer = () => {
   return (
-    <div
+    <Paper
+      elevation={2}
+      square
       style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexGrow: 1,
-        flexDirection: 'row',
-        backgroundColor: 'blue',
-        padding: '0 1rem',
+        padding: '3.1rem 1rem',
       }}
     >
-      <h2>Footer</h2>
-    </div>
+      <Container>
+        <Typography align="center" variant="body2">
+          @2022 lloydrichardsdesign.com
+        </Typography>
+      </Container>
+    </Paper>
   );
 };
 
