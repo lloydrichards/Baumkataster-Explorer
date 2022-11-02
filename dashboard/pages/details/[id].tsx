@@ -33,16 +33,14 @@ export const getServerSideProps: GetServerSideProps<IDetailPage> = async (
   context
 ) => {
   const id = context.params?.id;
-  const data = await fetch('http://localhost:3000/api/details', {
-    body: JSON.stringify({
-      query: id,
-    }),
-    method: 'POST',
-  });
+  const data = await fetch(`http://localhost:3000/api/details/${id}`);
 
+  const json = await data.json();
+
+  //   console.log(json);
   return {
     props: pipe(
-      DetailResult.decode(data),
+      DetailResult.decode(json),
       E.fold(
         (l) =>
           ({

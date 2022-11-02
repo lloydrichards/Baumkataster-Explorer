@@ -12,18 +12,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
   await prisma.$connect();
   const { id } = req.query;
 
+  console.log(id);
+
   if (typeof id === 'string') {
     const data = await prisma.tree.findFirst({
       where: {
         id: id || undefined,
       },
     });
-    console.log(data);
+    console.log({ data });
     res.status(200).json({
       data: data,
       status: 'OK',
     });
   } else {
+    console.log('invalid id');
     res.status(500).json({
       data: {},
       status: 'Invalid ID',
