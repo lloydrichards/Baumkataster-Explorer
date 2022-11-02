@@ -1,9 +1,11 @@
-import React from 'react'
-
-const ResultCard = () => {
-  return (
-    <div>ResultCard</div>
-  )
+import React from 'react';
+import { TreeResultType } from '../../types/tree';
+interface IResultCard {
+  data: TreeResultType;
 }
 
-export default ResultCard
+const ResultCard: React.FC<IResultCard> = ({ data }) => {
+  return <div>ResultCard</div>;
+};
+
+export default ResultCard;

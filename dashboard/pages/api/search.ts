@@ -5,6 +5,7 @@ import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../config/prisma';
+import { TreeResultType } from '../../types/tree';
 
 const SearchParam = t.type({
   query: t.string,
@@ -14,24 +15,33 @@ type SearchParam = t.TypeOf<typeof SearchParam>;
 type IData = {
   err?: string;
   data: any;
+  status: string;
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
   await prisma.$connect();
 
-  const resp = await pipe(
+  const resp: TreeResultType[] = await pipe(
     // NOTE: There was an issue here where i forgot to parse the JSON
     SearchParam.decode(JSON.parse(req.body)),
     E.fold(
       async (l) => {
         res.status(500).json({
           err: `Can't parse this: ${req.body.data}`,
+          status: 'ERROR',
           data: failure(l),
         });
         throw Error();
       },
       async (r) => {
-        const data = await prisma.tree.findFirst({
+        const data = await prisma.tree.findMany({
+          select: {
+            id: true,
+            species: true,
+            genus: true,
+            quarter: true,
+            name_lat: true,
+          },
           where: { genus: { contains: r.query } },
           take: 10,
         });
@@ -42,6 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
 
   res.status(200).json({
     data: resp,
+    status: 'OK',
   });
 };
 

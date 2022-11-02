@@ -1,7 +1,7 @@
 import * as t from 'io-ts';
 
-const TreeType = t.type({
-  address: t.string,
+export const TreeType = t.type({
+  address: t.union([t.null, t.string]),
   category: t.string,
   crown: t.number,
   genus: t.string,
@@ -10,10 +10,27 @@ const TreeType = t.type({
   name_german: t.string,
   name_lat: t.string,
   quarter: t.string,
-  source: t.string,
-  species: t.string,
+  source: t.union([t.null, t.string]),
+  species: t.union([t.null, t.string]),
   status: t.string,
   tree_number: t.string,
   type: t.string,
-  year: t.string,
+  year: t.union([t.null, t.string]),
 });
+
+export type TreeType = t.TypeOf<typeof TreeType>;
+
+export const TreeResultType = t.type({
+  id: t.string,
+  genus: t.string,
+  name_lat: t.string,
+  quarter: t.string,
+  species: t.union([t.null, t.string]),
+});
+
+export type TreeResultType = t.TypeOf<typeof TreeResultType>;
+
+export const SearchResult = t.type({
+  data: t.array(TreeResultType),
+});
+export type SearchResult = t.TypeOf<typeof SearchResult>;
