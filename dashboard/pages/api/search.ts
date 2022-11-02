@@ -49,10 +49,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
             name_lat: true,
           },
           where: {
-            quarter: { contains: r.query },
+            name_lat: { contains: r.query },
             OR: {
-              species: { contains: r.query },
-              OR: { quarter: { contains: r.query } },
+              quarter: { contains: r.query },
             },
           },
           take: r.limit,

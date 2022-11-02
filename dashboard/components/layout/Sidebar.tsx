@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
   useEffect(() => {
     if (debouncedSearch) {
       setLoading(true);
-      fetch('http://localhost:3000/api/search', {
+      fetch('https://baumkataster-explorer.vercel.app/api/search', {
         body: JSON.stringify({
           query: debouncedSearch,
           limit: 50,
