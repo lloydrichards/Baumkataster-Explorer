@@ -43,7 +43,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
   res.status(200).json({
     data: resp,
   });
-  console.log(resp);
 };
 
 export default handler;

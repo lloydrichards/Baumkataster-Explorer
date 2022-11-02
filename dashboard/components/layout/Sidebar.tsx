@@ -17,7 +17,10 @@ const Sidebar: React.FC = () => {
         method: 'POST',
       })
         .then((e) => e.json())
-        .then((e) => console.log(e));
+        .then((e) => {
+          // TODO: Add setResults here
+          console.log(e.data);
+        });
     }
   }, [debouncedSearch]);
 

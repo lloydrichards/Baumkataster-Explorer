@@ -8,7 +8,6 @@ export default function Home() {
   const router = useRouter();
 
   const query = router;
-  console.log(query);
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Head>
