@@ -5,9 +5,7 @@
     "source.fixAll": true,
     "source.organizeImports": true
   },
-  "todo-tree.filtering.excludeGlobs": [
-    "**/node_modules"
-  ],
+  "todo-tree.filtering.excludeGlobs": ["**/node_modules"],
   "todo-tree.general.tags": [
     "TODO",
     "BUG",
@@ -24,18 +22,9 @@
     "[/]"
   ],
   "todo-tree.general.tagGroups": {
-    "[ ]": [
-      "[ ]",
-      "[]"
-    ],
-    "[x]": [
-      "[x]",
-      "[X]"
-    ],
-    "[-]": [
-      "[-]",
-      "[/]"
-    ]
+    "[ ]": ["[ ]", "[]"],
+    "[x]": ["[x]", "[X]"],
+    "[-]": ["[-]", "[/]"]
   },
   "todo-tree.regex.subTagRegex": "^\\s*\\((.*)\\)",
   "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
@@ -113,5 +102,6 @@
     "editor.defaultFormatter": "Prisma.prisma"
   },
   "typescript.tsdk": ".\\node_modules\\typescript\\lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "conventionalCommits.scopes": ["dataset"]
 }
