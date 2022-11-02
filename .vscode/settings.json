@@ -103,5 +103,5 @@
   },
   "typescript.tsdk": ".\\node_modules\\typescript\\lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "conventionalCommits.scopes": ["dataset"]
+  "conventionalCommits.scopes": ["dataset", "database"]
 }
