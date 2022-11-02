@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -26,4 +27,6 @@ model Tree {
   source      String?
   crown       Int
   geometry    String
+
+  @@fulltext([quarter, name_lat])
 }
