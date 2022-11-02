@@ -12,9 +12,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page);
 
   return getLayout(
-    <>
+    <div>
       <Head>
-        <title>Lloyd's Baumkataster Explorer</title>
+        <title>Lloyd&apos;s Baumkataster Explorer</title>
         <meta
           name="description"
           content="A Database Explorer for the Zurich Baumkataster"
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
-    </>
+    </div>
   );
 }
 

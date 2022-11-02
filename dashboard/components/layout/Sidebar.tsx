@@ -76,7 +76,7 @@ const Sidebar: React.FC = () => {
             ) : results.length == 0 ? (
               <Container style={{ padding: '1rem' }}>
                 <Typography align="center">
-                  🕵️ We can't seem to find anything...
+                  🕵️ We can&apos;t seem to find anything...
                 </Typography>
               </Container>
             ) : (
