@@ -21,8 +21,8 @@ model Tree {
   name_german String
   tree_number String
   status      String
-  type        Int?
-  year        Int?
+  type        String?
+  year        String?
   source      String?
   crown       Int
   geometry    String

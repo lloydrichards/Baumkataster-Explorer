@@ -19,25 +19,31 @@ type IData = {
 const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
   await prisma.$connect();
 
-  return await pipe(
-    SearchParam.decode(req.body.data),
+  const resp = await pipe(
+    // NOTE: There was an issue here where i forgot to parse the JSON
+    SearchParam.decode(JSON.parse(req.body)),
     E.fold(
-      (l) => {
+      async (l) => {
         res.status(500).json({
           err: `Can't parse this: ${req.body.data}`,
           data: failure(l),
         });
+        throw Error();
       },
       async (r) => {
         const data = await prisma.tree.findFirst({
           where: { genus: { contains: r.query } },
+          take: 10,
         });
-        res.status(200).json({
-          data,
-        });
+        return data;
       }
     )
   );
+
+  res.status(200).json({
+    data: resp,
+  });
+  console.log(resp);
 };
 
 export default handler;

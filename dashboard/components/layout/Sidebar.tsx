@@ -1,30 +1,41 @@
-'use client';
+import SearchIcon from '@mui/icons-material/Search';
+import { Card, CardContent, OutlinedInput, Typography } from '@mui/material';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import SearchBar from '../input/SearchBar';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '../hooks/useDebunce';
 
-// async function getProducts() {
-//   // getStaticProps
-//   const res = await fetch(
-//     'https://product-app-101-server.vercel.app/api/products'
-//   );
-//   return res.json();
-// }
-const Sidebar = () => {
-  const params = useSearchParams();
-  const query = params.get('query');
+const Sidebar: React.FC = () => {
+  const [results, setResults] = useState([]);
+  const [search, setSearch] = useState('');
 
-  //   const results = use(getProducts());
-  
+  const debouncedSearch = useDebounce(search, 500);
 
-  console.log({ query });
-  //   console.log({ results });
+  useEffect(() => {
+    if (debouncedSearch) {
+      fetch('http://localhost:3000/api/search', {
+        body: JSON.stringify({ query: debouncedSearch }),
+        method: 'POST',
+      })
+        .then((e) => e.json())
+        .then((e) => console.log(e));
+    }
+  }, [debouncedSearch]);
 
   return (
-    <div style={{ flex: 2, backgroundColor: 'salmon', padding: '2rem 1rem' }}>
+    <div style={{ flex: 2, backgroundColor: 'salmon' }}>
       Search
-      <SearchBar value={query} />
-      <Link href={`/details/${'hello'}`}>Click Me</Link>
+      <Card>
+        <CardContent>
+          <Typography>Search</Typography>
+          <OutlinedInput
+            fullWidth
+            endAdornment={<SearchIcon />}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Link href={`/details/${'hello'}`}>Click Me</Link>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -12,13 +12,15 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
     "@prisma/client": "^4.5.0",
     "fp-ts": "^2.13.1",
     "io-ts": "^2.2.19",
     "next": "^13.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-fetch-hook": "^1.9.5"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
