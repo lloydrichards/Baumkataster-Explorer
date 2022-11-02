@@ -1,24 +1,39 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Card, CardContent, OutlinedInput, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  OutlinedInput,
+  Typography,
+} from '@mui/material';
 import * as E from 'fp-ts/Either';
 import { pipe } from 'fp-ts/lib/function';
 import { failure } from 'io-ts/lib/PathReporter';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { SearchResult, TreeResultType } from '../../types/tree';
+import { SearchResult } from '../../types/search';
+import { TreeResultType } from '../../types/tree';
 import ResultCard from '../card/ResultCard';
 import { useDebounce } from '../hooks/useDebunce';
 
 const Sidebar: React.FC = () => {
   const [results, setResults] = useState<TreeResultType[]>([]);
   const [search, setSearch] = useState('');
+  const [prevPage, setPrevPage] = useState(false);
+  const [nextPage, setNextPage] = useState('');
 
   const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
     if (debouncedSearch) {
       fetch('http://localhost:3000/api/search', {
-        body: JSON.stringify({ query: debouncedSearch }),
+        body: JSON.stringify({
+          query: debouncedSearch,
+          limit: 50,
+          cursor: null,
+          back: false,
+        }),
         method: 'POST',
       })
         .then((e) => e.json())
@@ -44,7 +59,6 @@ const Sidebar: React.FC = () => {
 
   return (
     <div style={{ flex: 2, backgroundColor: 'salmon' }}>
-      Search
       <Card>
         <CardContent>
           <Typography>Search</Typography>
@@ -54,10 +68,16 @@ const Sidebar: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Link href={`/details/${'hello'}`}>Click Me</Link>
-          {results.length == 0
-            ? null
-            : results.map((r) => <ResultCard key={r.id} data={r} />)}
+          <Container style={{ minHeight: '70vh' }}>
+            {results.length == 0
+              ? null
+              : results.map((r) => <ResultCard key={r.id} data={r} />)}
+          </Container>
+          <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button>Previous Page</Button>
+            <Box />
+            <Button>Next Page</Button>
+          </Box>
         </CardContent>
       </Card>
     </div>

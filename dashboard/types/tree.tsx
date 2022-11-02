@@ -30,7 +30,4 @@ export const TreeResultType = t.type({
 
 export type TreeResultType = t.TypeOf<typeof TreeResultType>;
 
-export const SearchResult = t.type({
-  data: t.array(TreeResultType),
-});
-export type SearchResult = t.TypeOf<typeof SearchResult>;
+
