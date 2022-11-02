@@ -33,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
           where: { genus: { contains: r.query } },
         });
         res.status(200).json({
-          data: 'Success',
+          data,
         });
       }
     )
