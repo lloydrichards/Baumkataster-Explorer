@@ -7,8 +7,7 @@ export const SearchResult = t.type({
 export type SearchResult = t.TypeOf<typeof SearchResult>;
 
 export const SearchParam = t.type({
-  queryTree: t.string,
-  queryAddress: t.string,
+  query: t.string,
   limit: t.number,
   cursor: t.union([t.null, t.string]),
   back: t.boolean,

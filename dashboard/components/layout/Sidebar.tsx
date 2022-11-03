@@ -20,19 +20,16 @@ import { useDebounce } from '../hooks/useDebunce';
 
 const Sidebar: React.FC = () => {
   const [results, setResults] = useState<TreeResultType[]>([]);
-  const [treeQuery, setTreeQuery] = useState<string | null>(null);
-  const [addressQuery, setAddressQuery] = useState<string | null>(null);
+  const [search, setSearch] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const dSearch = useDebounce(treeQuery, 500);
-  const dAddress = useDebounce(addressQuery, 500);
+  const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
-    if (dSearch || dAddress) {
+    if (debouncedSearch) {
       setLoading(true);
       const params: SearchParam = {
-        queryTree: dSearch || '',
-        queryAddress: dAddress || '',
+        query: debouncedSearch,
         limit: 50,
         cursor: null,
         back: false,
@@ -61,28 +58,21 @@ const Sidebar: React.FC = () => {
           );
         });
     }
-  }, [dSearch, dAddress]);
+  }, [debouncedSearch]);
 
   return (
     <div style={{ flex: 2 }}>
       <Card elevation={8}>
         <CardContent>
-          <Typography>Search Tree</Typography>
+          <Typography>Search</Typography>
           <OutlinedInput
             fullWidth
             endAdornment={<SearchIcon />}
-            value={treeQuery}
-            onChange={(e) => setTreeQuery(e.target.value)}
-          />
-          <Typography>Search Address</Typography>
-          <OutlinedInput
-            fullWidth
-            endAdornment={<SearchIcon />}
-            value={addressQuery}
-            onChange={(e) => setAddressQuery(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Container style={{ minHeight: '70vh' }}>
-            {loading ? (
+            {search == null ? null : loading ? (
               <Container style={{ padding: '1rem' }}>
                 <Typography align="center">loading...</Typography>
               </Container>
