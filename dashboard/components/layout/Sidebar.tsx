@@ -39,7 +39,7 @@ const Sidebar: React.FC = () => {
         .then((e) => e.json())
         .then((e) => {
           // TODO: Add setResults here
-          console.log(e.data);
+          // console.log(e.data);
           setLoading(false);
           pipe(
             SearchResult.decode(e),

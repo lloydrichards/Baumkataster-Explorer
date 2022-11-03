@@ -58,7 +58,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
           // cursor: r.cursor ? { id: r.cursor } : undefined,
           // skip: r.cursor ? 1 : undefined,
         });
-        console.log(data);
+        // console.log(data);
         return {
           data: data,
           info: {
