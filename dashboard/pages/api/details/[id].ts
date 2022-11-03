@@ -11,10 +11,12 @@ type IData = {
 const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
   try {
     await prisma.$connect();
+    // NOTE: rather then follow the same pattern as api/search, wanted to show dynamic api routing
     const { id } = req.query;
 
     // console.log(id);
 
+    // OPTIMIZE: should be a pipe
     if (typeof id === 'string') {
       const data = await prisma.tree.findFirst({
         where: {
@@ -27,6 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
         status: 'OK',
       });
     } else {
+      // TODO: error handling could be done better, return an actual message?
       console.error('invalid id');
       res.status(500).json({
         data: {},
@@ -34,6 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
       });
     }
   } catch (err) {
+    // TODO: error handling
     console.error(err);
   }
 };

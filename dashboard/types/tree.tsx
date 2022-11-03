@@ -29,5 +29,3 @@ export const TreeResultType = t.type({
 });
 
 export type TreeResultType = t.TypeOf<typeof TreeResultType>;
-
-

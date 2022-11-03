@@ -6,9 +6,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../config/prisma';
 import { SearchParam } from '../../types/search';
 
+// TODO: change to union of success and failure
 type IData = {
   err?: string;
+  // NOTE: intentionally set data to any so I could show how to safely type on frontend
   data: any;
+  // TODO: This was supposed to be used for pagination, but never implemented
   info?: {
     cursor?: string;
     hasNextPage: boolean;
@@ -29,6 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
           status: 'ERROR',
           data: failure(l),
         });
+        // HACK: this does not give any feedback on the error and should be improved
         throw Error();
       },
       async (r) => {
@@ -40,6 +44,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
             quarter: true,
             name_lat: true,
           },
+          // TODO: improve how FullText search works, still a little buggy
+          // TODO: add additional filters for quarter, type, status
           where: {
             OR: [
               {
@@ -60,6 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
             ],
           },
           take: r.limit,
+          // TODO: this would have been used for pagination
           // cursor: r.cursor ? { id: r.cursor } : undefined,
           // skip: r.cursor ? 1 : undefined,
         });

@@ -1,12 +1,8 @@
 import { Typography } from '@mui/material';
-import { useRouter } from 'next/router';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { NextPageWithLayout } from './page';
 
 const Home: NextPageWithLayout = () => {
-  const router = useRouter();
-
-  const query = router;
   return (
     <div
       style={{
@@ -32,7 +28,7 @@ const Home: NextPageWithLayout = () => {
     </div>
   );
 };
-
+// NOTE: since appDir didn't work, will use a layout in order to show similar nested components
 export default Home;
 Home.getLayout = (page: any) => {
   return <DashboardLayout>{page}</DashboardLayout>;

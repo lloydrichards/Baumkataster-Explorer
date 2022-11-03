@@ -23,6 +23,7 @@ const Sidebar: React.FC = () => {
   const [search, setSearch] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // NOTE: debounce search typing to minimize api calls
   const debouncedSearch = useDebounce(search, 500);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const Sidebar: React.FC = () => {
       })
         .then((e) => e.json())
         .then((e) => {
-          // TODO: Add setResults here
+          // [x] Add setResults here
           // console.log(e.data);
           setLoading(false);
           pipe(
@@ -49,6 +50,7 @@ const Sidebar: React.FC = () => {
             E.fold(
               (l) => {
                 console.error(failure(l));
+                // FIXME: deal with error state in ui
                 return null;
               },
               (r) => {
@@ -72,6 +74,7 @@ const Sidebar: React.FC = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
           <Container style={{ minHeight: '70vh' }}>
+            // OPTIMIZE: use a pipe to return all states in a cleaner way
             {search == null ? null : loading ? (
               <Container style={{ padding: '1rem' }}>
                 <Typography align="center">loading...</Typography>
