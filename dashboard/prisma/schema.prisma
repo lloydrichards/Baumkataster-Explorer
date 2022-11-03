@@ -28,5 +28,6 @@ model Tree {
   crown       Int
   geometry    String
 
-  @@fulltext([quarter, name_lat, id, address])
+  @@fulltext([name_lat, id])
+  @@fulltext([quarter, address])
 }
