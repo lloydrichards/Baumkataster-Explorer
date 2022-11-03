@@ -12,6 +12,7 @@ import * as E from 'fp-ts/Either';
 import { pipe } from 'fp-ts/lib/function';
 import { failure } from 'io-ts/lib/PathReporter';
 import { useEffect, useState } from 'react';
+import { urlBase } from '../../config/api';
 import { SearchResult } from '../../types/search';
 import { TreeResultType } from '../../types/tree';
 import ResultCard from '../card/ResultCard';
@@ -27,7 +28,8 @@ const Sidebar: React.FC = () => {
   useEffect(() => {
     if (debouncedSearch) {
       setLoading(true);
-      fetch('http://localhost:3000/api/search', {
+      
+      fetch(`${urlBase}/api/search`, {
         body: JSON.stringify({
           query: debouncedSearch,
           limit: 50,

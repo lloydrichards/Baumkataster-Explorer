@@ -4,6 +4,7 @@ import { failure } from 'io-ts/lib/PathReporter';
 import { GetServerSideProps } from 'next';
 import DetailCard from '../../components/card/DetailCard';
 import DashboardLayout from '../../components/layout/DashboardLayout';
+import { urlBase } from '../../config/api';
 import { DetailResult } from '../../types/details';
 import { TreeType } from '../../types/tree';
 import { NextPageWithLayout } from '../page';
@@ -33,7 +34,7 @@ export const getServerSideProps: GetServerSideProps<IDetailPage> = async (
   context
 ) => {
   const id = context.params?.id;
-  const data = await fetch(`http://localhost:3000/api/details/${id}`);
+  const data = await fetch(`${urlBase}/api/details/${id}`);
 
   const json = await data.json();
 
