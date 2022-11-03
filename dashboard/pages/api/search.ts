@@ -44,12 +44,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
             OR: [
               {
                 name_lat: {
-                  contains: r.query,
+                  search: r.query,
                 },
               },
               {
                 quarter: {
-                  contains: r.query,
+                  search: r.query,
                 },
               },
               {
