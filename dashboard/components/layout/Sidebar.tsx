@@ -13,29 +13,33 @@ import { pipe } from 'fp-ts/lib/function';
 import { failure } from 'io-ts/lib/PathReporter';
 import { useEffect, useState } from 'react';
 import { urlBase } from '../../config/api';
-import { SearchResult } from '../../types/search';
+import { SearchParam, SearchResult } from '../../types/search';
 import { TreeResultType } from '../../types/tree';
 import ResultCard from '../card/ResultCard';
 import { useDebounce } from '../hooks/useDebunce';
 
 const Sidebar: React.FC = () => {
   const [results, setResults] = useState<TreeResultType[]>([]);
-  const [search, setSearch] = useState('');
+  const [treeQuery, setTreeQuery] = useState<string | null>(null);
+  const [addressQuery, setAddressQuery] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const debouncedSearch = useDebounce(search, 500);
+  const dSearch = useDebounce(treeQuery, 500);
+  const dAddress = useDebounce(addressQuery, 500);
 
   useEffect(() => {
-    if (debouncedSearch) {
+    if (dSearch || dAddress) {
       setLoading(true);
-      
+      const params: SearchParam = {
+        queryTree: dSearch || '',
+        queryAddress: dAddress || '',
+        limit: 50,
+        cursor: null,
+        back: false,
+      };
+
       fetch(`${urlBase}/api/search`, {
-        body: JSON.stringify({
-          query: debouncedSearch,
-          limit: 50,
-          cursor: null,
-          back: false,
-        }),
+        body: JSON.stringify(params),
         method: 'POST',
       })
         .then((e) => e.json())
@@ -57,18 +61,25 @@ const Sidebar: React.FC = () => {
           );
         });
     }
-  }, [debouncedSearch]);
+  }, [dSearch, dAddress]);
 
   return (
     <div style={{ flex: 2 }}>
       <Card elevation={8}>
         <CardContent>
-          <Typography>Search</Typography>
+          <Typography>Search Tree</Typography>
           <OutlinedInput
             fullWidth
             endAdornment={<SearchIcon />}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={treeQuery}
+            onChange={(e) => setTreeQuery(e.target.value)}
+          />
+          <Typography>Search Address</Typography>
+          <OutlinedInput
+            fullWidth
+            endAdornment={<SearchIcon />}
+            value={addressQuery}
+            onChange={(e) => setAddressQuery(e.target.value)}
           />
           <Container style={{ minHeight: '70vh' }}>
             {loading ? (

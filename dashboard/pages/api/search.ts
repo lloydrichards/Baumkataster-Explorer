@@ -1,18 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import * as E from 'fp-ts/Either';
 import { pipe } from 'fp-ts/lib/function';
-import * as t from 'io-ts';
 import { failure } from 'io-ts/lib/PathReporter';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../config/prisma';
-
-const SearchParam = t.type({
-  query: t.string,
-  limit: t.number,
-  cursor: t.union([t.null, t.string]),
-  back: t.boolean,
-});
-type SearchParam = t.TypeOf<typeof SearchParam>;
+import { SearchParam } from '../../types/search';
 
 type IData = {
   err?: string;
@@ -49,9 +41,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<IData>) => {
             name_lat: true,
           },
           where: {
-            name_lat: { search: r.query },
+            name_lat: { search: r.queryTree },
             OR: {
-              quarter: { search: r.query },
+              id: { search: r.queryTree },
+              OR: {
+                quarter: { search: r.queryAddress },
+                OR: {
+                  address: { search: r.queryAddress },
+                },
+              },
             },
           },
           take: r.limit,
